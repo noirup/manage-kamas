@@ -1,0 +1,33 @@
+
+body {
+    background-image: url("/src/assets/login_kamas.jpg");
+    display: table;
+    width: 100%;
+}
+
+.form-style {
+    width: 500px;
+    height: fit-content;
+    position: relative;
+    background-color: cadetblue;
+    border-radius: 7%;
+    vertical-align: middle;
+    margin: 10rem auto;
+    padding: 2%;
+    border: 1px solid rgba(0,0,0,.2);
+}
+
+.form-style h1 {
+    text-align : center;
+}
+
+
+.form-style form .button-container {
+    margin-top: 45px;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.form-style form .button-container button {
+    width: 40%;
+}
