@@ -64,11 +64,11 @@ function LoginForm({
                     <Form.Control.Feedback type="invalid">Please fill in your password.</Form.Control.Feedback>
                 </InputGroup>
             </Form.Group>
-            <div class="button-container">
+            <Form.Group className="button-container">
                 <Button variant="light" type="submit">
                     Submit
                 </Button>
-            </div>
+            </Form.Group>
         </Form>
     );
 }
