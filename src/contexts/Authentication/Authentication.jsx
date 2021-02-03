@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { isEmpty } from '../../utils/utils';
 
-const JWT_STORAGE_KEY="keyJWT";
+const JWT_STORAGE_KEY="UHye6584re";
 
 const AuthenticationContext = React.createContext({
     jsonWebToken: "",
@@ -13,7 +13,7 @@ const AuthenticationConsumer = AuthenticationContext.Consumer;
 
 const AuthenticationProvider = ({children}) => {
 
-    let item = localStorage.getItem(JWT_STORAGE_KEY);
+    let item = sessionStorage.getItem(JWT_STORAGE_KEY);
 
     if (isEmpty(item)) {
         item = "";
@@ -27,7 +27,7 @@ const AuthenticationProvider = ({children}) => {
 
     const jWTChange = (newJWT) => {
         setJWT(newJWT);
-        localStorage.setItem(JWT_STORAGE_KEY, newJWT);
+        sessionStorage.setItem(JWT_STORAGE_KEY, newJWT);
     };
 
     const providerData = {

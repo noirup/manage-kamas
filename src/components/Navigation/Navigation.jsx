@@ -1,8 +1,8 @@
-import React, {useContext} from "react";
-import {Link} from "react-router-dom";
-import {Nav, Navbar} from "react-bootstrap";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { Nav, Navbar } from "react-bootstrap";
 import NavLinkItem from "./NavLinkItem";
-import {AuthenticationContext} from '../../contexts/Authentication/Authentication';
+import { AuthenticationContext } from '../../contexts/Authentication/Authentication';
 
 
 function Navigation({style,...otherProps}) {

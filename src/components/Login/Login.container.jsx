@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import LoginForm from './LoginForm/LoginForm';
 import {AuthenticationContext} from '../../contexts/Authentication/Authentication';
 import {Redirect} from 'react-router-dom';
+import { isEmpty } from '../../utils/utils';
 
 function LoginContainer (){
 
@@ -11,26 +12,29 @@ function LoginContainer (){
     const context = useContext(AuthenticationContext);
 
     const loginSubmit = async () => {
-        let resp = await fetch("/api/users/me", {
+        let resp = await fetch("/api/user/authenticate", {
             method: "post",
             body: JSON.stringify({
-                username: login,
+                login: login,
                 password: password
             }),
             headers: {
                 'Content-Type': "application/json"
             }
         }).then(resp => {
+            console.log("Connection successfull")
             return resp.json();
         }).catch(err => console.log(err))
 
-        console.log("Connection successfull,", resp.success)
+        if (isEmpty(resp)) {
+            return false;
+        }
 
-        if (resp.success) {
+        if (resp.token) {
             context.jWTChange(resp.token);
         }
         
-        return resp.success;
+        return true;
     }
 
     const onChangeLogin = (username) => {

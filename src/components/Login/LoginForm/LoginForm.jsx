@@ -13,6 +13,7 @@ function LoginForm({
     const [validated, setValidated] = useState(false);
     const [text, setText] = useState(<p></p>);
     const onSubmitEvent = async (e) => {
+        e.preventDefault();
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
             e.preventDefault();
@@ -40,6 +41,11 @@ function LoginForm({
     }
     return (
         <Form noValidate validated={validated} onSubmit={onSubmitEvent}>
+            
+            <Form.Text className="text-muted">
+                    {text}
+            </Form.Text>
+
             <Form.Group controlId="formBasicLogin">
                 <Form.Label>Username</Form.Label>
                 <InputGroup>
@@ -48,9 +54,6 @@ function LoginForm({
                     </InputGroup.Prepend>
                     <Form.Control required onChange={onChangeLoginEvent} type="text" placeholder="Enter Username" />
                     <Form.Control.Feedback type="invalid">Please fill in your use name.</Form.Control.Feedback>
-                    <Form.Text className="text-muted">
-                    {text}
-                    </Form.Text>
                 </InputGroup>
             </Form.Group>
 
