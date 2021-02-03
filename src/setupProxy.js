@@ -4,7 +4,7 @@ module.exports = function(app) {
     app.use(
         '/api',
         createProxyMiddleware(
-            {target : 'https://manage-kamas-api.herokuapp.com/',
+            {target : 'https://manage-kamas-api.herokuapp.com',
             pathRewrite : {'/api/': '/'}}
         )
     );
