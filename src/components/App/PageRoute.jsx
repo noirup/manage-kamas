@@ -3,6 +3,7 @@ import React, {useContext} from "react";
 import {Switch, Route, Redirect} from "react-router-dom";
 import DashboardPage from "../DashboardPage/DashboardPage";
 import LoginPage from "../LoginPage/LoginPage";
+import RegisterPage from "../RegisterPage/RegisterPage";
 import Logout from "../Logout/Logout";
 import { AuthenticationContext } from '../../contexts/Authentication/Authentication';
 
@@ -19,6 +20,7 @@ function PageRoute() {
         return (
             <Switch>
                 <Route path="/login" component={LoginPage}/>
+                <Route path="/register" component={RegisterPage}/>
                 <Redirect to="/login" />;
             </Switch>
         )

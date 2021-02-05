@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Form, Button, InputGroup, Alert } from "react-bootstrap";
-import './LoginForm.css'
+import './RegisterForm.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faKey } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from "react-router-dom";
 
-function LoginForm({
-        loginSubmit,
+function RegisterForm({
+        registerSubmit,
+        onChangeEmail,
         onChangeLogin,
         onChangePassword
     }){
@@ -23,10 +25,10 @@ function LoginForm({
             e.preventDefault();
             e.stopPropagation();
         } else {
-            const resp = await loginSubmit();
+            const resp = await registerSubmit();
             if(!resp){
                 setValidated(false);
-                setText(<Alert variant="warning">Unable to find a user</Alert>);
+                setText(<Alert variant="warning">Unable to create a user</Alert>);
             }
         }
     }
@@ -34,6 +36,11 @@ function LoginForm({
     const onChangeLoginEvent = (e) => {
         e.preventDefault();
         onChangeLogin(e.target.value);
+    }
+
+    const onChangeEmailEvent = (e) => {
+        e.preventDefault();
+        onChangeEmail(e.target.value);
     }
 
     const onChangePasswordEvent = (e) => {
@@ -44,13 +51,14 @@ function LoginForm({
     const history = useHistory();
 
     const routeChange = () =>{ 
-        let path = `/register`; 
+        let path = `/login`; 
         history.push(path);
     }
+
     return (
         <Form noValidate validated={validated} onSubmit={onSubmitEvent}>
             
-            <Form.Text>
+            <Form.Text className="text-muted">
                     {text}
             </Form.Text>
 
@@ -62,6 +70,17 @@ function LoginForm({
                     </InputGroup.Prepend>
                     <Form.Control required onChange={onChangeLoginEvent} type="text" placeholder="Enter Username" />
                     <Form.Control.Feedback type="invalid">Please fill in your use name.</Form.Control.Feedback>
+                </InputGroup>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <InputGroup>
+                    <InputGroup.Prepend>
+                        <FontAwesomeIcon icon={faEnvelope} />
+                    </InputGroup.Prepend>
+                    <Form.Control required onChange={onChangeEmailEvent} type="text" placeholder="Enter Email" />
+                    <Form.Control.Feedback type="invalid">Please fill in your email.</Form.Control.Feedback>
                 </InputGroup>
             </Form.Group>
 
@@ -82,10 +101,10 @@ function LoginForm({
             </Form.Group>
             <hr/>
             <Form.Group className="no-margin">
-                <Button className="href-button-style" onClick={routeChange} variant="link">Click here to create an account</Button>
+                <Button className="href-button-style" onClick={routeChange} variant="link">Click here to connect</Button>
             </Form.Group>
         </Form>
     );
 }
 
-export default LoginForm;
+export default RegisterForm;
