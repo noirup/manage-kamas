@@ -22,7 +22,6 @@ function LoginContainer (){
                 'Content-Type': "application/json"
             }
         }).then(resp => {
-            console.log("Connection successfull")
             return resp.json();
         }).catch(err => console.log(err))
 
