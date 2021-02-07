@@ -11,6 +11,7 @@ function LoginForm({
         onChangeLogin,
         onChangePassword
     }){
+    
     const [validated, setValidated] = useState(false);
 
     const [text, setText] = useState(<p></p>);
@@ -48,7 +49,7 @@ function LoginForm({
         history.push(path);
     }
     return (
-        <Form noValidate validated={validated} onSubmit={onSubmitEvent}>
+        <Form validated={validated} onSubmit={onSubmitEvent}>
             
             <Form.Text>
                     {text}

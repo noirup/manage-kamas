@@ -1,7 +1,7 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import LoginForm from './LoginForm/LoginForm';
-import {AuthenticationContext} from '../../contexts/Authentication/Authentication';
-import {Redirect} from 'react-router-dom';
+import { AuthenticationContext } from '../../contexts/Authentication/Authentication';
+import { Redirect } from 'react-router-dom';
 import { isEmpty } from '../../utils/utils';
 
 function LoginContainer (){
@@ -22,7 +22,7 @@ function LoginContainer (){
                 'Content-Type': "application/json"
             }
         }).then(resp => {
-            return resp.json();
+            return resp.ok ? resp.json() : null;
         }).catch(err => console.log(err))
 
         if (isEmpty(resp)) {

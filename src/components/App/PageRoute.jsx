@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 
 import {Switch, Route, Redirect} from "react-router-dom";
-import DashboardPage from "../DashboardPage/DashboardPage";
+import Dashboard from "../DashboardPage/Dashboard.container";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import Logout from "../Logout/Logout";
@@ -13,7 +13,8 @@ function PageRoute() {
         return (
             <Switch>
                 <Route path="/logout" component={Logout}/>
-                <Route path="/" component={DashboardPage}/>
+                <Route path="/kamas" component={Dashboard}/>
+                <Redirect to="/kamas" />;
             </Switch>
         );
     } else {

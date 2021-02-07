@@ -10,9 +10,9 @@ function Navigation({style,...otherProps}) {
   if(context.isConnected()){
     return (    
       <Navbar style={{...style}} {...otherProps} expand="sm">
-        <Navbar.Brand as={Link} to="/" className="ml-3">Navbar</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/kamas" className="ml-3">Navbar</Navbar.Brand>
         <Nav className="mr-auto">
-          <NavLinkItem as={Link} to="/">Dashboard</NavLinkItem>
+          <NavLinkItem as={Link} to="/kamas">Kamas</NavLinkItem>
           <NavLinkItem as={Link} to="/logout">Logout</NavLinkItem>
         </Nav>
       </Navbar>

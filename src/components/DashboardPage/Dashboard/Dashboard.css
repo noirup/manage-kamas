@@ -1,0 +1,60 @@
+.col-sm-4 {
+    flex: 0 0 18% !important;
+}
+
+.main-div {
+    margin: 1%;
+}
+
+.list-group a {
+    height: 60px;
+    opacity: 0.8;
+    background-color: gray;
+    background-size: 100%;
+    background-position-y: center;
+    border-radius: 5%;
+}
+
+.list-group a div {
+    opacity: 1;
+    color: white;
+    font-family: serif;
+    width: 100%;
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+.list-group a:hover {
+    opacity: 1;
+    background-color: gray;
+}
+
+.list-group-item.list-group-item-action.active {
+    background-color: rgb(71, 175, 179);
+    border: 1px solid rgba(0,0,0,.2);
+    opacity: 1 !important;
+}
+
+.list-group-item.list-group-item-action.active:hover {
+    background-color: rgb(52, 201, 206);
+}
+
+.serveur-style {
+    background-color: rgb(83, 83, 83) !important;
+    opacity: 1;
+    border-radius: 0;
+}
+
+.serveur-style div {
+    font-family: serif;
+    width: 100%;
+    text-align: center;
+    font-size: 1.25rem;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.add-server-style {
+    background-color: gray !important;
+}
