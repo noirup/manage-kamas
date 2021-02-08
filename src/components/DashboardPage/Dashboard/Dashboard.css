@@ -58,3 +58,9 @@
 .add-server-style {
     background-color: gray !important;
 }
+
+.left-list .col-sm-8 {
+    flex: auto;
+    width: auto;
+    max-width: 100%!important;
+}

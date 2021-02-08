@@ -1,0 +1,19 @@
+.tab-content a {
+    opacity: 0.8;
+    background-color: gray;
+    color: white;
+}
+
+.tab-content a:hover {
+    opacity: 1;
+}
+
+.tab-content .nav-item.nav-link.active {
+    background-color: rgb(71, 175, 179);
+    opacity: 1 !important;
+    color: white;
+}
+
+.tab-content .nav-item.nav-link.active:hover {
+    background-color: rgb(52, 201, 206);
+}

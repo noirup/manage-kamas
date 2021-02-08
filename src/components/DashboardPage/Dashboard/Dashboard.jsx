@@ -1,27 +1,16 @@
 import React from 'react'
 import './Dashboard.css'
 import { Tab, Row, Col, ListGroup, Form } from "react-bootstrap";
+import DungeonNavbarContainer from "../../DungeonNavbar/DungeonNavbar.container";
 
 function DashboardContainer({
     activeKey,
     onKeyChangeEvent,
     servers,
     newServer,
-    setNewServer,
-    submitNewServer
+    onChangeNewServerEvent,
+    onSubmitNewServer
 }) {
-
-    const onChangeNewServerEvent = (e) => {
-        setNewServer(e.target.value);
-    }
-
-    const onSubmitNewServer = () => {
-        if (newServer) {
-            submitNewServer();
-            setNewServer("");
-        }
-    }
-
     return (
         <div className="main-div">
             <Tab.Container id="list-group-tabs-example" activeKey={"#"+activeKey}>
@@ -35,14 +24,16 @@ function DashboardContainer({
                     <ListGroup.Item onClick={onKeyChangeEvent} key={server.serverName} action href={"#"+server.serverName}><div>{server.serverName}</div></ListGroup.Item>
                     )}
                     <ListGroup.Item className="add-server-style" >
-                        <Form onSubmit={onSubmitNewServer}><Form.Group><Form.Label></Form.Label><Form.Control required value={newServer} onChange={onChangeNewServerEvent} placeholder="Add a new server" type="text"/></Form.Group></Form>
+                        <Form onSubmit={onSubmitNewServer}><Form.Group><Form.Control required value={newServer} onChange={onChangeNewServerEvent} placeholder="Add a new server" type="text"/></Form.Group></Form>
                     </ListGroup.Item>
                 </ListGroup>
                 </Col>
                 <Col sm={8}>
                 <Tab.Content>
                     {servers.map((server) => 
-                    <Tab.Pane key={server.serverName} eventKey={"#"+server.serverName}>{server.serverName}</Tab.Pane>
+                    <Tab.Pane key={server.serverName} eventKey={"#"+server.serverName}>
+                        <DungeonNavbarContainer server={server} />
+                    </Tab.Pane>
                     )}
                 </Tab.Content>
                 </Col>

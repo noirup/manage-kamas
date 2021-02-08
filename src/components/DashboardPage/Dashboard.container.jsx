@@ -9,10 +9,6 @@ function DashboardContainer() {
   const [activeKey, setActiveKey] = useState("");
   const [newServer, setNewServer] = useState("");
 
-  const onKeyChangeEvent = (e) => {
-    setActiveKey(e.target.text !== undefined ? e.target.text : e.target.innerHTML);
-  }
-
   useEffect(() => {
     const getData = (async () => {
         return await fetch("/api/server/get_servers", {
@@ -24,8 +20,10 @@ function DashboardContainer() {
         }).then(resp => {
             return resp.ok ? resp.json() : [];
         }).catch(err => console.log(err)).then((servers) => {
+          if (servers !== undefined) {
             setServers(servers.sort((a, b) => a.serverName.localeCompare(b.serverName)));
             setActiveKey(servers[0] !== undefined ? servers[0].serverName : "");
+          }
       });
     });
     getData();
@@ -44,13 +42,29 @@ function DashboardContainer() {
     }).then(resp => {
       return resp.ok ? resp.json() : [];
     }).then((servers) => {
-      setServers(servers.sort((a, b) => a.serverName.localeCompare(b.serverName)));
-      setActiveKey(newServer);
+      if (servers !== undefined) {
+        setServers(servers.sort((a, b) => a.serverName.localeCompare(b.serverName)));
+        setActiveKey(newServer);
+      }
     }).catch(err => {
       console.log(err);
     });
   }
 
+  const onKeyChangeEvent = (e) => {
+    setActiveKey(e.target.text !== undefined ? e.target.text : e.target.innerHTML);
+  }
+
+  const onChangeNewServerEvent = (e) => {
+      setNewServer(e.target.value);
+  }
+
+  const onSubmitNewServer = () => {
+      if (newServer) {
+          submitNewServer();
+          setNewServer("");
+      }
+  }
 
   return (
       <Dashboard
@@ -58,8 +72,8 @@ function DashboardContainer() {
         onKeyChangeEvent={onKeyChangeEvent}
         servers={servers}
         newServer={newServer}
-        setNewServer={setNewServer}
-        submitNewServer={submitNewServer} />
+        onChangeNewServerEvent={onChangeNewServerEvent}
+        onSubmitNewServer={onSubmitNewServer} />
   )
 }
 
