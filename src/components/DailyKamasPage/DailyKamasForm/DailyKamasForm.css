@@ -1,0 +1,35 @@
+
+
+.add-daily-kamas-form-style h3 {
+    margin-bottom: 5px;
+    text-align : center;
+}
+
+.form-parent-div {
+    overflow: hidden;
+}
+
+
+.add-daily-kamas-form-style {
+    float: left !important;
+    width: 450px !important;
+    height: fit-content;
+    position: relative;
+    background-color: cadetblue;
+    border-radius: 7%;
+    vertical-align: middle;
+    margin: 1% 1% 1% 5% !important;
+    padding: 2%;
+    border: 1px solid rgba(0,0,0,.2);
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+}
+
+.add-daily-kamas-form-style form .button-container {
+    margin-top: 45px;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.add-daily-kamas-form-style form .button-container button {
+    width: 40%;
+}

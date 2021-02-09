@@ -50,11 +50,9 @@ function LoginForm({
     }
     return (
         <Form validated={validated} onSubmit={onSubmitEvent}>
-            
             <Form.Text>
                     {text}
             </Form.Text>
-
             <Form.Group controlId="formBasicLogin">
                 <Form.Label>Username</Form.Label>
                 <InputGroup>
@@ -65,7 +63,6 @@ function LoginForm({
                     <Form.Control.Feedback type="invalid">Please fill in your use name.</Form.Control.Feedback>
                 </InputGroup>
             </Form.Group>
-
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <InputGroup>

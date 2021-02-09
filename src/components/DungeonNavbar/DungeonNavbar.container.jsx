@@ -5,7 +5,7 @@ import DungeonNavbar from './DungeonNavbarView/DungeonNavbar';
 function DungeonNavbarContainer({
     server
 }) {
-        
+    
     const context = useContext(AuthenticationContext);
     const [dungeons, setDungeons] = useState([]);
     const [activeKey, setActiveKey] = useState("");

@@ -13,15 +13,11 @@ function Layout() {
           />
         </Col>
       </Row>
-
       <Row>
         <Col className="p-0 m-0">
-
           <PageRoute/>
-         
         </Col>
       </Row>
-
     </Container>
   );
 }
