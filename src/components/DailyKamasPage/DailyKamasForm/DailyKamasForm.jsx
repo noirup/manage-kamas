@@ -11,8 +11,13 @@ function DailyKamasForm({
     setStartDate,
     setAmount,
     onSubmitEvent,
-    text
+    text,
+    isDailyAmount,
+    setDailyAmount,
+    currentTotal
 }) {
+
+    const onRadioChangeValue = e => {setDailyAmount(e.target.value === "on" ? true : false)};
 
     return (
         <div className="form-parent-div">
@@ -33,9 +38,12 @@ function DailyKamasForm({
                         </InputGroup>
                     </Form.Group>
                     <Form.Group controlId="formBasicAmount">
-                        <Form.Label>Amount of kamas</Form.Label>
+                        <Form.Check onChange={onRadioChangeValue} type='radio' label="Daily new amount" id="new-amount-radio" name="new-amount-radio" />
+                        <Form.Check onChange={onRadioChangeValue} value="off" type='radio' label={"Total amount: " + currentTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "k"} id="new-amount-radio" name="new-amount-radio" />
                         <InputGroup>
-                            <Form.Control required type="number" placeholder="amount of kamas" onChange={a => setAmount(a.target.value)} />
+                            {isDailyAmount ? <Form.Control required type="number" placeholder="Daily new amount" onChange={a => setAmount(a.target.value)} /> : 
+                                <Form.Control required type="number" placeholder="New total amount" onChange={a => setAmount(!isDailyAmount ? a.target.value-currentTotal : a.target.value)} />}
+                            
                             <Form.Control.Feedback type="invalid">Please fill in an amount.</Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>

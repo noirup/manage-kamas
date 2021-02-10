@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react'
 import { AuthenticationContext } from '../../contexts/Authentication/Authentication';
 import DailyKamasForm from './DailyKamasForm/DailyKamasForm'; 
 import { Alert } from "react-bootstrap";
+import DailyKamasTable from './DailyKamasTable/DailyKamasTable'; 
 
 function DailyKamasContainer({
     dungeon
@@ -13,6 +14,8 @@ function DailyKamasContainer({
     const [startDate, setStartDate] = useState(new Date());
     const [amount, setAmount] = useState(0);
     const [text, setText] = useState("");
+    const [isDailyAmount, setDailyAmount] = useState(true);
+    const [currentTotal, setCurrentTotal] = useState(0);
 
     useEffect(() => {
       const getData = (async () => {
@@ -27,7 +30,12 @@ function DailyKamasContainer({
               return resp.ok ? resp.json() : [];
           }).then((dailyKamas) => {
             if (dailyKamas !== undefined) {
-                setDailyKamas(dailyKamas.sort((a, b) => a.entryDate - b.entryDate));
+                let totalDk = 0;
+                dailyKamas.forEach(dk => {
+                    totalDk += dk.amount;
+                });
+                setCurrentTotal(totalDk);
+                setDailyKamas(dailyKamas);
             }
         }).catch(err => console.log(err));
       });
@@ -50,7 +58,8 @@ function DailyKamasContainer({
             return resp.ok ? resp.json() : [];
         }).then((dkList) => {
             if (dkList !== undefined) {
-                setDailyKamas(dkList.sort((a, b) => a.entryDate - b.entryDate));
+                setCurrentTotal(parseInt(currentTotal)+parseInt(amount));
+                setDailyKamas(dkList);
             }
             return true
         }).catch(err => {
@@ -60,7 +69,11 @@ function DailyKamasContainer({
 
     const onSubmitEvent = async (e) => {
         console.log()
+        e.preventDefault();
         if (startDate && amount && e.currentTarget.checkValidity()) {
+            if (!isDailyAmount) {
+                setAmount(amount-currentTotal);
+            }
             setValidated(true);
             const resp = await submitDailyKamas();
             if(!resp){
@@ -72,14 +85,18 @@ function DailyKamasContainer({
 
     return (
         <>
-        <DailyKamasForm 
-            validated={validated}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            setAmount={setAmount}
-            onSubmitEvent={onSubmitEvent}
-            text={text} />
-            <div>{dailyKamas.map(dk => <p>{dk.amount}</p>)}</div>
+            <DailyKamasForm 
+                validated={validated}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                setAmount={setAmount}
+                onSubmitEvent={onSubmitEvent}
+                text={text}
+                isDailyAmount={isDailyAmount} 
+                setDailyAmount={setDailyAmount}
+                currentTotal={currentTotal} />
+            <DailyKamasTable 
+                dailyKamas={dailyKamas} />
         </>
     )
 }

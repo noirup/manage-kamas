@@ -24,7 +24,7 @@ function DungeonNavbarContainer({
               return resp.ok ? resp.json() : [];
           }).then((dungeons) => {
             if (dungeons !== undefined) {
-                setDungeons(dungeons.sort((a, b) => a.dungeonName.localeCompare(b.dungeonName)));
+                setDungeons(dungeons);
                 setActiveKey(dungeons[0] !== undefined ? dungeons[0].dungeonName : "");
             }
         }).catch(err => console.log(err));
@@ -47,7 +47,7 @@ function DungeonNavbarContainer({
         return resp.ok ? resp.json() : [];
       }).then((dungeons) => {
         if (dungeons !== undefined) {
-            setDungeons(dungeons.sort((a, b) => a.dungeonName.localeCompare(b.dungeonName)));
+            setDungeons(dungeons);
             setActiveKey(dungeons[0] !== undefined ? dungeons[0].dungeonName : "");
         }
       }).catch(err => {
@@ -59,7 +59,8 @@ function DungeonNavbarContainer({
         setNewDungeon(e.target.value);
     }
   
-    const onSubmitNewDungeon = () => {
+    const onSubmitNewDungeon = (e) => {
+        e.preventDefault();
         if (newDungeon) {
             console.log(newDungeon)
             submitNewDungeon();

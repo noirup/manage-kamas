@@ -12,13 +12,13 @@
 
 .add-daily-kamas-form-style {
     float: left !important;
-    width: 450px !important;
+    width: 400px !important;
     height: fit-content;
     position: relative;
-    background-color: cadetblue;
-    border-radius: 7%;
+    background-color: rgb(114, 165, 167);
+    border-radius: 2%;
     vertical-align: middle;
-    margin: 1% 1% 1% 5% !important;
+    margin: 1% 1% 1% 0% !important;
     padding: 2%;
     border: 1px solid rgba(0,0,0,.2);
     box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
@@ -32,4 +32,8 @@
 
 .add-daily-kamas-form-style form .button-container button {
     width: 40%;
+}
+
+.form-check-input.is-valid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label {
+    color: chartreuse !important;
 }
