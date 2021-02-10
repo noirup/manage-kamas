@@ -48,7 +48,7 @@ function DungeonNavbarContainer({
       }).then((dungeons) => {
         if (dungeons !== undefined) {
             setDungeons(dungeons);
-            setActiveKey(dungeons[0] !== undefined ? dungeons[0].dungeonName : "");
+            setActiveKey(newDungeon);
         }
       }).catch(err => {
         console.log(err);
