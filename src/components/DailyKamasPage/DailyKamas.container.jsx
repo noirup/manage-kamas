@@ -14,8 +14,9 @@ function DailyKamasContainer({
     const [startDate, setStartDate] = useState(new Date());
     const [amount, setAmount] = useState(0);
     const [text, setText] = useState("");
-    const [isDailyAmount, setDailyAmount] = useState(true);
+    const [isDailyAmount, setDailyAmount] = useState(false);
     const [currentTotal, setCurrentTotal] = useState(0);
+    const [selectedRows, setSelectedRows] = useState({rowIds: []});
 
     useEffect(() => {
       const getData = (async () => {
@@ -58,17 +59,19 @@ function DailyKamasContainer({
             return resp.ok ? resp.json() : [];
         }).then((dkList) => {
             if (dkList !== undefined) {
-                setCurrentTotal(parseInt(currentTotal)+parseInt(amount));
+                let totalDk = 0;
+                dkList.forEach(dk => {
+                    totalDk += dk.amount;
+                });
+                setCurrentTotal(totalDk);
                 setDailyKamas(dkList);
             }
-            return true
         }).catch(err => {
             console.log(err);
         });
     }
 
     const onSubmitEvent = async (e) => {
-        console.log()
         e.preventDefault();
         if (startDate && amount && e.currentTarget.checkValidity()) {
             if (!isDailyAmount) {
@@ -83,9 +86,52 @@ function DailyKamasContainer({
         }
     }
 
+    const onDeleteSelectionEvent = async (e) => {
+        e.preventDefault();
+        if (selectedRows) {
+            let dkRowsToBeDeleted = [];
+            let isFirst = true;
+            selectedRows.rowIds.forEach(s => {
+                if (isFirst) {
+                    dkRowsToBeDeleted.push({
+                        id: s,
+                        dungeonDto: dungeon
+                    });
+                    isFirst = false;
+                } else {
+                    dkRowsToBeDeleted.push({
+                        id: s
+                    });
+                }
+            });
+            return await fetch("/api/daily_kamas/delete_daily_kamas", {
+                method: "post",
+                body: JSON.stringify(dkRowsToBeDeleted),
+                headers: {
+                'Content-Type': "application/json",
+                'Authorization': ("Bearer " + context.JWT)
+                }
+            }).then(resp => {
+                return resp.ok ? resp.json() : [];
+            }).then((dkList) => {
+                if (dkList !== undefined) {
+                    let totalDk = 0;
+                    dkList.forEach(dk => {
+                        totalDk += dk.amount;
+                    });
+                    setCurrentTotal(totalDk);
+                    setDailyKamas(dkList);
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }
+
     return (
         <>
             <DailyKamasForm 
+                dungeonId={dungeon.id}
                 validated={validated}
                 startDate={startDate}
                 setStartDate={setStartDate}
@@ -96,7 +142,10 @@ function DailyKamasContainer({
                 setDailyAmount={setDailyAmount}
                 currentTotal={currentTotal} />
             <DailyKamasTable 
-                dailyKamas={dailyKamas} />
+                dailyKamas={dailyKamas}
+                setSelectedRows={setSelectedRows}
+                onDeleteSelectionEvent={onDeleteSelectionEvent} />
+            
         </>
     )
 }
