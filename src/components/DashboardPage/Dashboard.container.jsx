@@ -11,7 +11,7 @@ function DashboardContainer() {
 
   useEffect(() => {
     const getData = (async () => {
-        return await fetch("/api/server/get_servers", {
+        return await fetch("/api/server/get_sub_classes_servers", {
             method: "get",
             headers: {
               'Content-Type': "application/json",

@@ -10,34 +10,23 @@ function DungeonNavbarContainer({
     const [dungeons, setDungeons] = useState([]);
     const [activeKey, setActiveKey] = useState("");
     const [newDungeon, setNewDungeon] = useState("");
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
-      const getData = (async () => {
-          return await fetch("/api/dungeon/get_dungeons", {
-              method: "post",
-              body: JSON.stringify(server),
-              headers: {
-                'Content-Type': "application/json",
-                'Authorization': ("Bearer " + context.JWT)
-              }
-          }).then(resp => {
-              return resp.ok ? resp.json() : [];
-          }).then((dungeons) => {
-            if (dungeons !== undefined) {
-                setDungeons(dungeons);
-                setActiveKey(dungeons[0] !== undefined ? dungeons[0].dungeonName : "");
-            }
-        }).catch(err => console.log(err));
-      });
-      getData();
-    }, [context.JWT, server]);
+      if (server.dungeons !== undefined) {
+          setDungeons(server.dungeons);
+          setActiveKey(server.dungeons[0] !== undefined ? (server.dungeons[0].dungeonName + server.dungeons[0].id) : "");
+      }
+    }, [server]);
 
     const submitNewDungeon = async () => {
+      let newServer = server;
+      newServer.dungeons = null;
       return await fetch("/api/dungeon/add_dungeon", {
         method: "post",
         body: JSON.stringify({
           dungeonName: newDungeon,
-          server: server
+          server: newServer
         }),
         headers: {
           'Content-Type': "application/json",
@@ -45,10 +34,12 @@ function DungeonNavbarContainer({
         }
       }).then(resp => {
         return resp.ok ? resp.json() : [];
-      }).then((dungeons) => {
-        if (dungeons !== undefined) {
-            setDungeons(dungeons);
-            setActiveKey(newDungeon);
+      }).then((dungeon) => {
+        if (dungeon !== undefined) {
+          let newDungeons = dungeons;
+          newDungeons.push(dungeon);    
+          setDungeons(newDungeons);
+          setActiveKey(newDungeon+dungeon.id);
         }
       }).catch(err => {
         console.log(err);
@@ -62,22 +53,20 @@ function DungeonNavbarContainer({
     const onSubmitNewDungeon = (e) => {
         e.preventDefault();
         if (newDungeon) {
-            console.log(newDungeon)
             submitNewDungeon();
             setNewDungeon("");
         }
     }
-    const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const onSelectChangeEvent = (k) => {
-        k === "newDungeon" ? handleShow() : setActiveKey(k);
+        k === "newDungeon" + server.id ? handleShow() : setActiveKey(k);
     };
 
     return (
-        <DungeonNavbar server={server}
+        <DungeonNavbar serverId={server.id}
             dungeons={dungeons}
             activeKey={activeKey}
             setActiveKey={setActiveKey}

@@ -10,6 +10,7 @@ function DailyKamasForm({
     validated,
     startDate,
     setStartDate,
+    amount,
     setAmount,
     onSubmitEvent,
     text,
@@ -42,9 +43,7 @@ function DailyKamasForm({
                         <Form.Check checked={isDailyAmount} onChange={onRadioChangeValue} type='radio' label="Daily new amount" id={"new-amount-daily-radio-"+dungeonId} name={"new-amount-radio-"+dungeonId} />
                         <Form.Check checked={!isDailyAmount} onChange={onRadioChangeValue} value="off" id={"new-amount-total-radio-"+dungeonId} type='radio' label={"Total amount: " + currentTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "k"} name={"new-amount-radio-"+dungeonId} />
                         <InputGroup>
-                            {isDailyAmount ? <Form.Control required type="number" placeholder="Daily new amount" onChange={a => setAmount(a.target.value)} /> : 
-                                <Form.Control required type="number" placeholder="New total amount" onChange={a => setAmount(!isDailyAmount ? a.target.value-currentTotal : a.target.value)} />}
-                            
+                            <Form.Control required type="number" placeholder={isDailyAmount ? "Daily new amount" : "New total amount"} onChange={a => isDailyAmount ? setAmount(a.target.value) : setAmount(a.target.value-currentTotal)} />
                             <Form.Control.Feedback type="invalid">Please fill in an amount.</Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>

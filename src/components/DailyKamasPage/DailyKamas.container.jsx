@@ -12,44 +12,41 @@ function DailyKamasContainer({
     const [dailyKamas, setDailyKamas] = useState([]);
     const [validated, setValidated] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState("");
     const [text, setText] = useState("");
     const [isDailyAmount, setDailyAmount] = useState(false);
     const [currentTotal, setCurrentTotal] = useState(0);
-    const [selectedRows, setSelectedRows] = useState({rowIds: []});
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [currentCols, setCurrentCols] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const NUMBER_OF_COLS_PER_PAGE = 5;
 
     useEffect(() => {
-      const getData = (async () => {
-          return await fetch("/api/daily_kamas/get_all_by_dungeon", {
-              method: "post",
-              body: JSON.stringify(dungeon),
-              headers: {
-                'Content-Type': "application/json",
-                'Authorization': ("Bearer " + context.JWT)
-              }
-          }).then(resp => {
-              return resp.ok ? resp.json() : [];
-          }).then((dailyKamas) => {
-            if (dailyKamas !== undefined) {
-                let totalDk = 0;
-                dailyKamas.forEach(dk => {
-                    totalDk += dk.amount;
-                });
-                setCurrentTotal(totalDk);
-                setDailyKamas(dailyKamas);
-            }
-        }).catch(err => console.log(err));
-      });
-      getData();
-    }, [context.JWT]);
+        if (dungeon.dailyKamas !== undefined) {
+            let totalDk = 0;
+            dungeon.dailyKamas.forEach(dk => {
+                totalDk += dk.amount;
+            });
+            setCurrentTotal(totalDk);
+            setDailyKamas(dungeon.dailyKamas.sort(function(a, b){return new Date(b.entryDate)-new Date(a.entryDate)}));
+        }
+        setCurrentPage(0);
+        let newCurrentCols = [];
+        for (let i = 0; i < dailyKamas.length && i < ((currentPage+1)*NUMBER_OF_COLS_PER_PAGE); i++) {
+          newCurrentCols.push(dailyKamas[i]);
+        }
+        setCurrentCols(newCurrentCols);
+    }, [dungeon, dailyKamas]);
 
     const submitDailyKamas = async () => {
+        let newDungeon = dungeon;
+        newDungeon.dailyKamas = null;
         return await fetch("/api/daily_kamas/add_daily_kamas", {
             method: "post",
             body: JSON.stringify({
             entryDate: startDate,
             amount: amount,
-            dungeonDto: dungeon
+            dungeonDto: newDungeon
             }),
             headers: {
             'Content-Type': "application/json",
@@ -59,54 +56,39 @@ function DailyKamasContainer({
             return resp.ok ? resp.json() : [];
         }).then((dkList) => {
             if (dkList !== undefined) {
+                dungeon.dailyKamas = dkList;
                 let totalDk = 0;
                 dkList.forEach(dk => {
                     totalDk += dk.amount;
                 });
+                setAmount("");
                 setCurrentTotal(totalDk);
-                setDailyKamas(dkList);
+                setDailyKamas(dkList.sort(function(a, b){return new Date(b.entryDate)-new Date(a.entryDate)}));
             }
         }).catch(err => {
+            setText(<Alert variant="warning">An error occurred while adding the new entry</Alert>);
             console.log(err);
         });
     }
 
     const onSubmitEvent = async (e) => {
         e.preventDefault();
-        if (startDate && amount && e.currentTarget.checkValidity()) {
-            if (!isDailyAmount) {
-                setAmount(amount-currentTotal);
-            }
+        if (startDate && amount && e.currentTarget.checkValidity() && (isDailyAmount || (!isDailyAmount && amount !== currentTotal))) {
             setValidated(true);
-            const resp = await submitDailyKamas();
-            if(!resp){
-                setValidated(false);
-                setText(<Alert variant="warning">An error occurred while adding the new entry</Alert>);
-            }
+            await submitDailyKamas();
+            setValidated(false);
         }
     }
 
     const onDeleteSelectionEvent = async (e) => {
         e.preventDefault();
-        if (selectedRows) {
-            let dkRowsToBeDeleted = [];
-            let isFirst = true;
-            selectedRows.rowIds.forEach(s => {
-                if (isFirst) {
-                    dkRowsToBeDeleted.push({
-                        id: s,
-                        dungeonDto: dungeon
-                    });
-                    isFirst = false;
-                } else {
-                    dkRowsToBeDeleted.push({
-                        id: s
-                    });
-                }
-            });
+        if (selectedRows && selectedRows.length > 0) {
+            let tempDungeon = dungeon;
+            tempDungeon.dailyKamas = null;
+            selectedRows[0].dungeonDto = tempDungeon;
             return await fetch("/api/daily_kamas/delete_daily_kamas", {
                 method: "post",
-                body: JSON.stringify(dkRowsToBeDeleted),
+                body: JSON.stringify(selectedRows),
                 headers: {
                 'Content-Type': "application/json",
                 'Authorization': ("Bearer " + context.JWT)
@@ -115,17 +97,32 @@ function DailyKamasContainer({
                 return resp.ok ? resp.json() : [];
             }).then((dkList) => {
                 if (dkList !== undefined) {
+                    dungeon.dailyKamas = dkList;
                     let totalDk = 0;
                     dkList.forEach(dk => {
                         totalDk += dk.amount;
                     });
                     setCurrentTotal(totalDk);
-                    setDailyKamas(dkList);
+                    setDailyKamas(dkList.sort(function(a, b){return new Date(b.entryDate)-new Date(a.entryDate)}));
+                    setSelectedRows([]);
                 }
             }).catch(err => {
                 console.log(err);
             });
         }
+    }
+
+    const handlePageClick = (data) => {
+        handlePagination(data.selected)
+    };
+
+    const handlePagination = (nbr) => {
+        let newCurrentCols = [];
+        for (let i = (((nbr+1)*NUMBER_OF_COLS_PER_PAGE)-NUMBER_OF_COLS_PER_PAGE); i<dailyKamas.length && i<((nbr+1)*NUMBER_OF_COLS_PER_PAGE); i++) {
+          newCurrentCols.push(dailyKamas[i]);
+        }
+        setCurrentCols(newCurrentCols);
+        setCurrentPage(nbr);
     }
 
     return (
@@ -135,6 +132,7 @@ function DailyKamasContainer({
                 validated={validated}
                 startDate={startDate}
                 setStartDate={setStartDate}
+                amount={amount}
                 setAmount={setAmount}
                 onSubmitEvent={onSubmitEvent}
                 text={text}
@@ -143,8 +141,13 @@ function DailyKamasContainer({
                 currentTotal={currentTotal} />
             <DailyKamasTable 
                 dailyKamas={dailyKamas}
+                selectedRows={selectedRows}
                 setSelectedRows={setSelectedRows}
-                onDeleteSelectionEvent={onDeleteSelectionEvent} />
+                onDeleteSelectionEvent={onDeleteSelectionEvent}
+                handlePageClick={handlePageClick}
+                currentCols={currentCols}
+                currentPage={currentPage}
+                nbrOfColsPerPage={NUMBER_OF_COLS_PER_PAGE} />
             
         </>
     )
