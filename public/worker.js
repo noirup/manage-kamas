@@ -3,7 +3,8 @@ var urlsToCache = [
   '/',
   '/login',
   '/register',
-  '/kamas'
+  '/kamas',
+  '/kamas*'
 ];
 
 // Install a service worker
