@@ -10,11 +10,12 @@ var urlsToCache = [
 self.addEventListener('install', event => {
   // Perform install steps
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => {
+        return cache.match(evt.request).then(cacheResponse => cacheResponse || fetch(evt.request).then(networkResponse => {
+          cache.put(evt.request, networkResponse.clone());
+          return networkResponse;
+      }))
+    })  
   );
 });
 
