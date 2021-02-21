@@ -10,4 +10,8 @@
         height: 100%;
     }
 
+    .modal-content {
+        width: 98% !important;
+    }
+
 }
