@@ -24,10 +24,14 @@
         align-items: center;
         justify-content: center;
         border-bottom: none;
-        width: 90%;
+        margin-bottom: 15px;
     }
 
     .tab-content a {
         margin: 3px;
+    }
+
+    .tab-content {
+        width: 99%;
     }
 }
