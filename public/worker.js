@@ -4,6 +4,7 @@ var urlsToCache = [
   '/login',
   '/register',
   '/kamas',
+  'service-worker.js',
   '/kamas*'
 ];
 
