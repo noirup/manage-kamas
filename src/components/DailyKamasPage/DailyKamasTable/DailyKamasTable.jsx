@@ -16,9 +16,9 @@ function DailyKamasTable({
 }) {
 
   return (
-    <div style={{ height: 400, width: 420, backgroundColor: 'rgb(114, 165, 167)', borderRadius: '2%', boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important' }}>
+    <div className="daily-kamas-table-div">
       <Button onClick={onDeleteSelectionEvent} style={{ height: 35, margin:5 }} variant="light" type="submit">Delete Selection</Button>
-      <div style={{ height: 350, width: 420, backgroundColor: 'rgb(114, 165, 167)' }}>
+      <div className="daily-kamas-sub-div">
         <Table className="daily-kamas-table">
           <thead>
             <tr>

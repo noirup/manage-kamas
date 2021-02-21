@@ -17,3 +17,17 @@
 .tab-content .nav-item.nav-link.active:hover {
     background-color: rgb(52, 201, 206);
 }
+
+@media screen and (max-width: 800px) {
+
+    .nav.nav-tabs {
+        align-items: center;
+        justify-content: center;
+        border-bottom: none;
+        width: 90%;
+    }
+
+    .tab-content a {
+        margin: 3px;
+    }
+}

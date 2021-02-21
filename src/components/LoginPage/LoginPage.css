@@ -32,3 +32,11 @@ body {
 .form-style form .button-container button {
     width: 40%;
 }
+
+@media screen and (max-width: 800px) {
+
+    .form-style {
+        width: 95% !important;
+        margin-top: 15% !important;
+    }
+}

@@ -37,3 +37,11 @@
 .form-check-input.is-valid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label {
     color: chartreuse !important;
 }
+
+@media screen and (max-width: 800px) {
+
+    .add-daily-kamas-form-style {
+        width: 91% !important;
+        margin-left: 6% !important;
+    }
+}

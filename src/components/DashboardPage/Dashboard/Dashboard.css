@@ -64,3 +64,17 @@
     width: auto;
     max-width: 100%!important;
 }
+
+.dropdown-style {
+    margin: 0 0 10px 0;
+}
+
+.dropdown-style button {
+    background-color: rgb(52, 201, 206);
+    width: 200px;
+    margin: 0;
+}
+
+.left-list.dropdown-middle.row {
+    margin-left: 5.5em;
+}
