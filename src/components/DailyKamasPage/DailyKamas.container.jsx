@@ -132,7 +132,6 @@ function DailyKamasContainer({
                 validated={validated}
                 startDate={startDate}
                 setStartDate={setStartDate}
-                amount={amount}
                 setAmount={setAmount}
                 onSubmitEvent={onSubmitEvent}
                 text={text}

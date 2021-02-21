@@ -10,7 +10,6 @@ function DailyKamasForm({
     validated,
     startDate,
     setStartDate,
-    amount,
     setAmount,
     onSubmitEvent,
     text,
