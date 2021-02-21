@@ -8,7 +8,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/login",
+  "start_url": "https://manage-kamas.herokuapp.com/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
