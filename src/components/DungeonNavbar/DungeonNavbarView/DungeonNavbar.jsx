@@ -20,7 +20,7 @@ function DungeonNavbar({
         <Tabs activeKey={activeKey} onSelect={onSelectChangeEvent} transition={false} id="noanim-tab-example">
             {dungeons.map(d => 
                 <Tab eventKey={d.dungeonName + d.id} key={d.dungeonName + d.id} title={d.dungeonName}>
-                    <DailyKamasContainer dungeon={d} />
+                    {activeKey === (d.dungeonName + d.id) ? <DailyKamasContainer dungeon={d} /> : ""}
                 </Tab>
             )}
             <Tab eventKey={"newDungeon"+serverId} key={"newDungeon"+serverId} title="Add">

@@ -13,9 +13,10 @@ function DungeonNavbarContainer({
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-      if (server.dungeons !== undefined) {
-          setDungeons(server.dungeons);
-          setActiveKey(server.dungeons[0] !== undefined ? (server.dungeons[0].dungeonName + server.dungeons[0].id) : "");
+      if (server.dungeons !== undefined && server.dungeons !== null) {
+        setDungeons(server.dungeons);
+        setActiveKey((server.dungeons[0] !== undefined && server.dungeons[0] !== null) 
+          ? (server.dungeons[0].dungeonName + server.dungeons[0].id) : "");
       }
     }, [server]);
 
@@ -39,6 +40,7 @@ function DungeonNavbarContainer({
           let newDungeons = dungeons;
           newDungeons.push(dungeon);    
           setDungeons(newDungeons);
+          server.dungeons = newDungeons;
           setActiveKey(newDungeon+dungeon.id);
         }
       }).catch(err => {

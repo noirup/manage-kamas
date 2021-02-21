@@ -41,8 +41,10 @@ function DashboardContainer() {
       }
     }).then(resp => {
       return resp.ok ? resp.json() : [];
-    }).then((servers) => {
-      if (servers !== undefined) {
+    }).then((server) => {
+      if (server !== undefined) {
+        let newServers = servers;
+        newServers.push(server);
         setServers(servers.sort((a, b) => a.serverName.localeCompare(b.serverName)));
         setActiveKey(newServer);
       }

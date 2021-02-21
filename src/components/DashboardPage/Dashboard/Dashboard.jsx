@@ -34,11 +34,16 @@ function DashboardContainer({
                     </Col>
                     <Col sm={8}>
                     <Tab.Content>
-                        {servers.map((server) => 
-                        <Tab.Pane key={server.serverName} eventKey={"#"+server.serverName}>
-                            <DungeonNavbarContainer server={server} />
-                        </Tab.Pane>
-                        )}
+                        {servers.map((server) => {
+                        if (activeKey === server.serverName) {
+                            return (
+                            <Tab.Pane key={server.serverName} eventKey={"#"+server.serverName}>
+                                <DungeonNavbarContainer server={server} />
+                            </Tab.Pane>);
+                        } else {
+                            return "";
+                        }
+                        })}
                     </Tab.Content>
                     </Col>
                 </Row>
@@ -66,11 +71,16 @@ function DashboardContainer({
                     </Row>
                     <Row>
                         <Tab.Content>
-                            {servers.map((server) => 
-                            <Tab.Pane key={server.serverName} eventKey={"#"+server.serverName}>
-                                <DungeonNavbarContainer server={server} />
-                            </Tab.Pane>
-                            )}
+                            {servers.map((server) => {
+                            if (activeKey === server.serverName) {
+                                    return (
+                                    <Tab.Pane key={server.serverName} eventKey={"#"+server.serverName}>
+                                        <DungeonNavbarContainer server={server} />
+                                        </Tab.Pane>)
+                                } else {
+                                    return "";
+                                }
+                            })}
                         </Tab.Content>
                     </Row>
                 </Tab.Container>
