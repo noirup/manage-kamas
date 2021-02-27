@@ -3,6 +3,7 @@ import { AuthenticationContext } from '../../contexts/Authentication/Authenticat
 import DailyKamasForm from './DailyKamasForm/DailyKamasForm'; 
 import { Alert } from "react-bootstrap";
 import DailyKamasTable from './DailyKamasTable/DailyKamasTable'; 
+import DailyKamasChart from './DailyKamasChart/DailyKamasChart';
 
 function DailyKamasContainer({
     dungeon
@@ -126,7 +127,7 @@ function DailyKamasContainer({
     }
 
     return (
-        <>
+        <div className="daily-kamas-style" >
             <DailyKamasForm 
                 dungeonId={dungeon.id}
                 validated={validated}
@@ -138,17 +139,23 @@ function DailyKamasContainer({
                 isDailyAmount={isDailyAmount} 
                 setDailyAmount={setDailyAmount}
                 currentTotal={currentTotal} />
-            <DailyKamasTable 
-                dailyKamas={dailyKamas}
-                selectedRows={selectedRows}
-                setSelectedRows={setSelectedRows}
-                onDeleteSelectionEvent={onDeleteSelectionEvent}
-                handlePageClick={handlePageClick}
-                currentCols={currentCols}
-                currentPage={currentPage}
-                nbrOfColsPerPage={NUMBER_OF_COLS_PER_PAGE} />
+            {dailyKamas.length !== 0 ? 
+                <>
+                    <DailyKamasChart
+                        dailyKamas={dailyKamas}/>
+                    <DailyKamasTable 
+                        dailyKamas={dailyKamas}
+                        selectedRows={selectedRows}
+                        setSelectedRows={setSelectedRows}
+                        onDeleteSelectionEvent={onDeleteSelectionEvent}
+                        handlePageClick={handlePageClick}
+                        currentCols={currentCols}
+                        currentPage={currentPage}
+                        nbrOfColsPerPage={NUMBER_OF_COLS_PER_PAGE} />
+                </> : ""
+            }
             
-        </>
+        </div>
     )
 }
 

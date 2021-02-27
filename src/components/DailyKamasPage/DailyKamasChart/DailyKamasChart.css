@@ -1,0 +1,21 @@
+.charts-style {
+    float: right; 
+    margin: 0 10px 0 10px; 
+    background-color: rgb(114, 165, 167);
+    border: 1px solid rgba(0,0,0,.2);
+    width: 45%;
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+    height: 400px;
+}
+
+
+@media screen and (max-width: 800px) {
+
+    .charts-style {
+        float: none;
+        width: 91% !important;
+        margin-left: 6% !important;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+}
