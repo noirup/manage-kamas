@@ -50,7 +50,6 @@ function DashboardContainer({
                 </Tab.Container>
             </div>
         )
-
     } else {
         return (
             <div className="main-div">
@@ -59,7 +58,7 @@ function DashboardContainer({
                         <Form onSubmit={onSubmitNewServer}><Form.Group><Form.Control required value={newServer} onChange={onChangeNewServerEvent} placeholder="Add a new server" type="text"/></Form.Group></Form>
                         <Dropdown className="dropdown-style">
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                Servers
+                                {activeKey !== "" ? activeKey : "Servers"}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
