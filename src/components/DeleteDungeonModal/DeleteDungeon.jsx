@@ -19,7 +19,7 @@ function DeleteDungeon({
         <Modal show={show} onHide={handleClose}>
             <Form validated onSubmit={onSubmitDeleteDungeon}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Are you sure to want to delete the dungeon "{dungeon.dungeonName}" ?</Modal.Title>
+                    <Modal.Title>Are you sure you want to delete the dungeon "{dungeon.dungeonName}" ?</Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
