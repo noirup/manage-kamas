@@ -18,6 +18,10 @@
     background-color: rgb(52, 201, 206);
 }
 
+.delete-button-style {
+    margin-top: 10px;
+}
+
 @media screen and (max-width: 800px) {
 
     .nav.nav-tabs {
@@ -33,5 +37,9 @@
 
     .tab-content {
         width: 100%;
+    }
+
+    .delete-button-style {
+        margin: 0 0 10px 30px;
     }
 }

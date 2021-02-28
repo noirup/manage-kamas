@@ -11,6 +11,7 @@ function DungeonNavbarContainer({
     const [activeKey, setActiveKey] = useState("");
     const [newDungeon, setNewDungeon] = useState("");
     const [show, setShow] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
 
     useEffect(() => {
       if (server.dungeons !== undefined && server.dungeons !== null) {
@@ -67,6 +68,36 @@ function DungeonNavbarContainer({
         k === "newDungeon" + server.id ? handleShow() : setActiveKey(k);
     };
 
+    const handleCloseDelete = () => setShowDelete(false);
+    const handleShowDelete = () => setShowDelete(true);
+
+    const deleteDungeon = async dungeon => {
+      let newServer = server;
+      newServer.dungeons = null;
+      return await fetch("/api/dungeon/delete_dungeon", {
+        method: "delete",
+        body: JSON.stringify({
+          id: dungeon.id,
+          server: newServer
+        }),
+        headers: {
+          'Content-Type': "application/json",
+          'Authorization': ("Bearer " + context.JWT)
+        }
+      }).then(resp => {
+        return resp.ok ? resp.json() : [];
+      }).then((dungeons) => {
+        if (dungeons !== undefined) {
+          setDungeons(dungeons);
+          server.dungeons = dungeons;
+          setActiveKey((dungeons[0] !== undefined && dungeons[0] !== null) 
+            ? (dungeons[0].dungeonName + dungeons[0].id) : "");
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+
     return (
         <DungeonNavbar serverId={server.id}
             dungeons={dungeons}
@@ -77,8 +108,11 @@ function DungeonNavbarContainer({
             newDungeon={newDungeon}
             show={show}
             handleClose={handleClose}
-            handleShow={handleShow}
-            onSelectChangeEvent={onSelectChangeEvent} />
+            onSelectChangeEvent={onSelectChangeEvent}
+            showDelete={showDelete}
+            handleCloseDelete={handleCloseDelete}
+            handleShowDelete={handleShowDelete}
+            deleteDungeon={deleteDungeon} />
     )
 }
 
