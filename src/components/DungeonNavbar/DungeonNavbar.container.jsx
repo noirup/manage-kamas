@@ -99,7 +99,7 @@ function DungeonNavbarContainer({
     }
 
     return (
-        <DungeonNavbar serverId={server.id}
+        <DungeonNavbar server={server}
             dungeons={dungeons}
             activeKey={activeKey}
             setActiveKey={setActiveKey}

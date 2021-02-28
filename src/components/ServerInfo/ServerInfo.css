@@ -1,0 +1,13 @@
+.server-info-title {
+    color: white;
+    opacity: 0.9;
+}
+
+@media screen and (max-width: 800px) {
+
+    .server-info-title {
+        margin-left: 10%;
+        color: deepskyblue;;
+    }
+
+}
