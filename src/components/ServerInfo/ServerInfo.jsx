@@ -6,13 +6,15 @@ function ServerInfo({
 }) {
     let total = 0;
 
-    if(server.dungeons !== undefined) {
+    if(server.dungeons !== undefined && server.dungeons !== null) {
         server.dungeons.forEach(dungeon => {
-            let totalDk = 0;
-            dungeon.dailyKamas.forEach(dk => {
-                totalDk += dk.amount;
-            });
-            total += totalDk;
+            if(dungeon.dailyKamas !== undefined && dungeon.dailyKamas !== null) {
+                let totalDk = 0;
+                dungeon.dailyKamas.forEach(dk => {
+                    totalDk += dk.amount;
+                });
+                total += totalDk;
+            }
         });
     }
 
