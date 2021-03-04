@@ -8,6 +8,9 @@
     height: 400px;
 }
 
+.charts-style span {
+    display: none;
+}
 
 @media screen and (max-width: 800px) {
 

@@ -7,9 +7,7 @@ import { faKey } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from "react-router-dom";
 
 function LoginForm({
-        loginSubmit,
-        onChangeLogin,
-        onChangePassword
+        loginSubmit
     }){
     
     const [validated, setValidated] = useState(false);
@@ -18,28 +16,12 @@ function LoginForm({
 
     const onSubmitEvent = async (e) => {
         e.preventDefault();
-        const form = e.currentTarget;
         setValidated(true);
-        if (!form.checkValidity()) {
-            e.preventDefault();
-            e.stopPropagation();
-        } else {
-            const resp = await loginSubmit();
-            if(!resp){
-                setValidated(false);
-                setText(<Alert variant="warning">Unable to find a user</Alert>);
-            }
+        const resp = await loginSubmit(e.target.elements.formBasicLogin.value, e.target.elements.formBasicPassword.value);
+        if(!resp){
+            setValidated(false);
+            setText(<Alert variant="warning">Unable to find a user</Alert>);
         }
-    }
-
-    const onChangeLoginEvent = (e) => {
-        e.preventDefault();
-        onChangeLogin(e.target.value);
-    }
-
-    const onChangePasswordEvent = (e) => {
-        e.preventDefault();
-        onChangePassword(e.target.value);
     }
     
     const history = useHistory();
@@ -48,6 +30,7 @@ function LoginForm({
         let path = `/register`; 
         history.push(path);
     }
+    
     return (
         <Form validated={validated} onSubmit={onSubmitEvent}>
             <Form.Text>
@@ -59,7 +42,7 @@ function LoginForm({
                     <InputGroup.Prepend>
                         <FontAwesomeIcon icon={faUser} />
                     </InputGroup.Prepend>
-                    <Form.Control required onChange={onChangeLoginEvent} type="text" placeholder="Enter Username" />
+                    <Form.Control required type="text" placeholder="Enter Username" />
                     <Form.Control.Feedback type="invalid">Please fill in your use name.</Form.Control.Feedback>
                 </InputGroup>
             </Form.Group>
@@ -69,7 +52,7 @@ function LoginForm({
                     <InputGroup.Prepend>
                         <FontAwesomeIcon icon={faKey} />
                     </InputGroup.Prepend>
-                    <Form.Control required type="password" placeholder="Password" onChange={onChangePasswordEvent} />
+                    <Form.Control required type="password" placeholder="Password" />
                     <Form.Control.Feedback type="invalid">Please fill in your password.</Form.Control.Feedback>
                 </InputGroup>
             </Form.Group>
