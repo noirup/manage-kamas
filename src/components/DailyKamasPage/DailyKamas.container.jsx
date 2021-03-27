@@ -29,7 +29,11 @@ function DailyKamasContainer({
                 totalDk += dk.amount;
             });
             setCurrentTotal(totalDk);
-            setDailyKamas(dungeon.dailyKamas.sort(function(a, b){return new Date(b.entryDate)-new Date(a.entryDate)}));
+            setDailyKamas(dungeon.dailyKamas.sort((a, b) => {
+                let aDate = Date(a.entryDate);
+                let bDate = Date(b.entryDate);
+                return aDate === bDate ? b.id - a.id : bDate - aDate;
+            }));
         }
         setCurrentPage(0);
         let newCurrentCols = [];
